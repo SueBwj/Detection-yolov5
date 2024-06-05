@@ -2,8 +2,8 @@ from flask import *
 import datetime
 from datetime import timedelta
 import os
-from DetectModel import Detector
-from predict import predict
+from models.yolo import DetectionModel
+from detect import run
 
 # =============================Util Functions=====================================
 
@@ -49,12 +49,12 @@ def upload_file():
         # 保存用户上传的文件
         file.save(src_path)
         ext = file.filename.rsplit('.', 1)[1]  # 文件后缀名
-        img_y, img_info = predict(src_path, current_app.model, ext)
+        run()
         # 返回给前端页面，前端页面显示信息
         return jsonify({'status': 1,
                         'image_url': 'http://127.0.0.1:5003/uploads/' + file.filename,
-                        'draw_url': 'http://127.0.0.1:5003/tmp/' + file.filename,
-                        'image_info': img_info})
+                        'draw_url': 'http://127.0.0.1:5003/tmp/exp/' + file.filename,
+                        })
     return jsonify({'status': 0})
 
 
@@ -73,5 +73,5 @@ def show_file(file):
 if __name__ == '__main__':
     # 加载yolo5模型
     with app.app_context():
-        current_app.model = Detector()
+        current_app.model = DetectionModel()
     app.run(host='127.0.0.1', port=5003, debug=True)
