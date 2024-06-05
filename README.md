@@ -24,6 +24,8 @@
 
 #### Project setup
 
+需要配置 vue 运行的脚手架
+
 ```
 npm install
 ```
@@ -40,8 +42,21 @@ npm run serve
 
 模型结果:
 ![模型结果](predict.png)
+训练和预测的结果均在 backend/runs 文件夹中显示
 
 #### Project setup
+
+环境配置
+
+```
+pip install -r requirement.txt
+```
+
+```
+pip install flask
+```
+
+启动项目
 
 ```
 python app.py
